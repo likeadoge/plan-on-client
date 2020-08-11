@@ -31,13 +31,24 @@
           <a-menu-item key="sub4"><a-icon type="notification" />模板库</a-menu-item>
         </a-menu>
       </a-layout-sider>
-      <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">Content</a-layout-content>
+      <a-layout-content>
+        
+
+        <project-view />
+
+
+
+      </a-layout-content>
     </a-layout>
   </div>
 </template>
 
 <script>
-export default {};
+import ProjectView from './home/ProjectView'
+
+export default {
+  components:{ProjectView}
+};
 </script>
 
 <style scoped>
