@@ -1,0 +1,115 @@
+import { post, get } from '@/request/http'
+
+export const addProject = ({
+    name,
+    templateId,
+    orgId,
+    beginTime,
+    endTime,
+    describe
+}) => post('/task/project/add', {
+    name,
+    templateId,
+    orgId,
+    beginTime,
+    endTime,
+    describe
+})
+
+export const getProject = (status) => get('/task/project/getProjectPanels', { status: status }).then((res) => {
+    return res.map(({ panels, project }) => Object.assign({}, project, {
+        boardList: panels
+    }))
+})
+
+export const getProjectInfo = projectId => post('/task/panel/getPanels', [projectId])
+    .then(res => res[0])
+    .then(({ panels, project }) =>
+        Object.assign({}, project, {
+            boardList: panels
+        })
+    )
+
+export const getDepart = () => get('/sys/sysDepart/queryList', {}).then((res) => {
+    return res
+})
+// 获取模板列表
+export const getTemplate = () => get('/task/project/getTemplate', {}).then((res) => {
+    return res.filter(item => item.id != "20200730115701h4usoh301stosqv9he")
+})
+
+export const getTemplateList = () => get('/task/project/getTemplate', {}).then((res) => {
+    return res
+})
+
+
+export const getBoard = (id) => get('/task/panel/get', { projectId: id }).then((res) => {
+    return res
+})
+
+export const createBoard = ({ name, projectId }) => post('/task/panel/create', { name, projectId: projectId })
+
+
+// 项目归档
+export const Libraryproject = (id) => get('/task/project/archive', { id: id })
+
+// 项目删除
+export const Deleteproject = (id) => get('/task/project/delete', { id: id })
+
+// 项目还原
+export const Returnproject = (id) => get('/task/project/reserve', { id: id }).then((res) => {
+    return res
+})
+// 编辑项目
+export const Editproject = ({
+    id,
+    name,
+    templateId,
+    orgId,
+    beginTime,
+    endTime,
+    describe
+}) => post('/task/project/edit', {
+    id,
+    name,
+    templateId,
+    orgId,
+    beginTime,
+    endTime,
+    describe
+}).then((res) => {
+    return res
+})
+// 模板重命名
+export const EditTemplate = ({ id, name }) => post('/task/project/edit', { id: id, name: name }).then((res) => {
+    return res
+})
+// 项目保存为模板
+export const saveTemplate = ({ id, name }) => post('/task/template/saveProjectToTemplate', { projectId: id, templateName: name }).then((res) => {
+    return res
+})
+
+// 模板应用为项目
+export const applyTemplate = ({ projectName, templateId }) => post('/task/template/applyTemplateToProject', { projectName: projectName, templateId: templateId }).then((res) => {
+    return res
+})
+
+// 看板删除
+export const delBoard = (id) => get('/task/panel/delete', { id: id }).then((res) => {
+    return res
+})
+
+// 看板编辑
+export const editBoard = ({ id, name, projectId }) => post('/task/panel/edit', { id: id, name: name, projectId: projectId }).then((res) => {
+    return res
+})
+
+// 看板拖动
+export const sortBoard = (arr) => {
+    return post('/task/panel/drag', arr.map(({ id, projectId }, i) => ({ id, sort: i, projectId })))
+}
+
+// 获取项目带看板
+export const getAll = () => get('/task/project/getProjectPanels', {}).then((res) => {
+    return res
+})
