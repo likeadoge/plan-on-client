@@ -33,7 +33,6 @@
             <p>{{v.title}}</p>
           </a-card>
         </div>
-
         <!-- <p>{{ text }}</p> -->
       </a-collapse-panel>
     </a-collapse>

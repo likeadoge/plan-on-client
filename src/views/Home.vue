@@ -2,7 +2,12 @@
   <div style="padding:48px;height:100%">
     <a-layout style="padding: 24px 0; background: #fff;height:100%">
       <a-layout-sider width="200" style="background: #fff">
-        <a-menu
+        <flex-col  style="height:100%">
+          <flex-fixed class="new-btn-cntr">
+            <a-button type="primary" style="">新建项目</a-button>
+          </flex-fixed>
+          <flex-fill>
+            <a-menu
           mode="inline"
           :default-selected-keys="['1']"
           :default-open-keys="['sub1']"
@@ -30,6 +35,8 @@
           <a-menu-item key="sub3"><a-icon type="notification" />回收站</a-menu-item>
           <a-menu-item key="sub4"><a-icon type="notification" />模板库</a-menu-item>
         </a-menu>
+          </flex-fill>
+        </flex-col>
       </a-layout-sider>
       <a-layout-content>
         
@@ -52,4 +59,12 @@ export default {
 </script>
 
 <style scoped>
+.new-btn-cntr{
+  padding: 8px 16px;
+  border-right: 1px solid #e8e8e8;
+}
+
+.new-btn-cntr>button{
+  width:100%;text-align:center
+}
 </style>

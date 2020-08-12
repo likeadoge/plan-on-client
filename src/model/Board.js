@@ -1,12 +1,11 @@
-import ph from '@/utils/placeholder'
-import uuid from '@/utils/uuid'
+import * as rand from '@/utils/rand'
 
 export default class Board {
 
     static rand() {
         return new Board({
-            boardId: uuid(),
-            title: ph(15, 40)
+            boardId: rand.uuid(),
+            title: rand.str(15, 40)
         })
     }
 

@@ -1,5 +1,7 @@
 <template>
   <div class="cntr">
+    
+    <modal-project-info />
     <project-item
       :info="v.info"
       :id="v.info.projectId"
@@ -12,15 +14,18 @@
 
 <script>
 import ProjectItem from "./project/ProjectItem";
-import * as projRequest from "@/request/project";
+import ModalProjectInfo from "./project/ModalProjectInfo";
+import * as projRequest from "@/service/project";
 
 export default {
-  components: { ProjectItem },
+  components: { ProjectItem, 
+  ModalProjectInfo 
+  },
   data: () => ({
     list: [],
   }),
   mounted() {
-    projRequest.getProjectList().then((list) => (this.list = list));
+    projRequest.getProjectList().then((list) => (this.list = list)).then(()=>console.log(this.list));
   },
 };
 </script>
@@ -30,6 +35,6 @@ export default {
   height: 100%;
   width: 100%;
   overflow: auto;
-  padding:0 24px;
+  padding: 0 24px;
 }
 </style>

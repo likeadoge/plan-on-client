@@ -1,5 +1,4 @@
-import ph from '@/utils/placeholder'
-import uuid from '@/utils/uuid'
+import * as rand from '@/utils/rand'
 import moment from 'moment'
 
 export default class Project {
@@ -12,10 +11,10 @@ export default class Project {
         return new Project({
             beginTime: moment(),
             endTime: moment(),
-            title: ph(5, 12),
-            desc: ph(50, 100),
-            template: ph(5, 20),
-            projectId: uuid()
+            title: rand.str(5, 12),
+            desc: rand.str(50, 100),
+            template: rand.str(5, 20),
+            projectId: rand.uuid()
         })
     }
 
