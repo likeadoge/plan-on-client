@@ -4,7 +4,7 @@
       <a-layout-sider width="200" style="background: #fff">
         <flex-col  style="height:100%">
           <flex-fixed class="new-btn-cntr">
-            <a-button type="primary" style="">新建项目</a-button>
+            <a-button type="primary"  @click="()=>addProject()">新建项目</a-button>
           </flex-fixed>
           <flex-fill>
             <a-menu
@@ -39,22 +39,22 @@
         </flex-col>
       </a-layout-sider>
       <a-layout-content>
-        
-
-        <project-view />
-
-
-
+        <project-view  ref="projectView"/>
       </a-layout-content>
     </a-layout>
   </div>
 </template>
 
 <script>
-import ProjectView from './home/ProjectView'
+import ProjectView,{outer as outPV} from './home/ProjectView'
 
 export default {
-  components:{ProjectView}
+  components:{ProjectView},
+  methods:{
+    addProject(){
+      this.$refs.projectView[outPV.addProject]()
+    }
+  }
 };
 </script>
 

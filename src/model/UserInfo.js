@@ -38,4 +38,6 @@ export class UserGroup {
             userList: rand.arr(4, 7)(() => rand.str(4, 8))
         })
     }
+
+    static mockData = rand.arr(6, 12)(() => UserGroup.rand())
 }

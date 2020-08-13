@@ -16,7 +16,7 @@
                 <a href="javascript:;">保存为模板</a>
               </a-menu-item>
               <a-menu-item>
-                <a href="javascript:;">编辑</a>
+                <a href="javascript:;" @click="()=>editProject()">编辑</a>
               </a-menu-item>
               <a-menu-item>
                 <a href="javascript:;">归档</a>
@@ -29,9 +29,16 @@
         </template>
 
         <div class="board-list">
-          <a-card v-for="v in boardList" :key="v.boardId">
+          <styled-card
+            padding
+            level
+            hover
+            v-for="v in boardList"
+            :key="v.boardId"
+            style="height:140px"
+          >
             <p>{{v.title}}</p>
-          </a-card>
+          </styled-card>
         </div>
         <!-- <p>{{ text }}</p> -->
       </a-collapse-panel>
@@ -42,7 +49,9 @@
 <script>
 export default {
   props: ["id", "info", "boardList"],
-  mounted(){console.log(this.boardList)},
+  mounted() {
+    console.log(this.boardList);
+  },
   data() {
     return {
       text: `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`,
@@ -50,13 +59,18 @@ export default {
         "background: #fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
     };
   },
+  methods: {
+    editProject() {
+      this.$emit("editProject", this.id);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.board-list{
+.board-list {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 </style>
