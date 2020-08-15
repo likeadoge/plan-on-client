@@ -2,7 +2,59 @@ import * as rand from '@/utils/rand'
 import moment from 'moment'
 import { UserGroup } from './UserInfo'
 
+export class BoardInfo {
+    boardId = ''
+    title = ''
+    sort = ''
+    projectId = ''
+
+    rows = [] // {rowId,sort}
+    cols = [] // {colId,sort,title}
+
+    static blank() {
+        return new BoardInfo({})
+    }
+
+    static rand() {
+        return new BoardInfo({
+            boardId: rand.uuid(),
+            title: rand.str(15, 40)
+        })
+    }
+
+
+    constructor(json) {
+        Object.assign(this, json)
+    }
+
+}
+
+export class Template {
+    templateId = rand.uuid()
+    name = ""
+
+    constructor(json) {
+        Object.assign(this, json)
+    }
+
+    static rand() {
+        return new Template({
+            templateId: rand.uuid(),
+            name: rand.str(3, 7)
+        })
+    }
+
+    static mockData = rand.arr(3, 6)(() => Template.rand())
+
+}
+
+
 export class ProjectInfo {
+
+    static mockData = new Array(rand.num(4, 8)).fill(0).map(() => ({
+        info: ProjectInfo.rand(),
+        boardList: new Array(rand.num(4, 8)).fill(0).map(() => (BoardInfo.rand()))
+    }))
 
     constructor(json) {
         Object.assign(this, json)
@@ -36,59 +88,7 @@ export class ProjectInfo {
     viewableUser = undefined;
 }
 
-export class Template {
-    templateId = rand.uuid()
-    name = ""
 
-    constructor(json) {
-        Object.assign(this, json)
-    }
-
-    static rand() {
-        return new Template({
-            templateId: rand.uuid(),
-            name: rand.str(3, 7)
-        })
-    }
-
-    static mockData = rand.arr(3, 6)(() => Template.rand())
-
-}
-
-export class BoardInfo {
-    boardId = ''
-    title = ''
-    sort = ''
-    projectId = ''
-
-    rows = [] // {rowId,sort}
-    cols = [] // {colId,sort,title}
-
-    static blank() {
-        return new BoardInfo({})
-    }
-
-    static rand() {
-        return new BoardInfo({
-            boardId: rand.uuid(),
-            title: rand.str(15, 40)
-        })
-    }
-
-
-    constructor(json) {
-        Object.assign(this, json)
-    }
-
-    static fromServer(json) {
-        return new ProjectInfo({
-            boardId: json.id,
-            projectId: json.projectId,
-            sort: json.sort,
-            title: json.name,
-        })
-    }
-}
 
 export class Row {
     rowId = ''

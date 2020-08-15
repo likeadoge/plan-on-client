@@ -1,17 +1,14 @@
-import { ProjectInfo, BoardInfo, Template } from '@/model/Project'
-import * as rand from '@/utils/rand'
+import { ProjectInfo, Template } from '@/model/Project'
 
 export const getProjectList = () => Promise.resolve(
-    new Array(rand.num(4, 8)).fill(0).map(() => ({
-        info: ProjectInfo.rand(),
-        boardList: new Array(rand.num(4, 8)).fill(0).map(() => (BoardInfo.rand()))
-    }))
+    ProjectInfo.mockData
 )
 
 
-export const getProjectInfo = (pid) => Promise.resolve(
-    ProjectInfo.rand(pid)
-)
+export const getProject = (projectId) => {
+    const s = ProjectInfo.mockData.find(v => v.info.projectId === projectId)
+    return s ? Promise.resolve(s) : Promise.reject()
+}
 
 
 export const getTemplateList = () => Promise.resolve(

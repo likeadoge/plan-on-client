@@ -10,15 +10,8 @@
           </flex-fixed>
           <flex-fill>
             <span style="font-size: 18px;color:#333;">
-              <icon-font
-                type="icon-projectCount"
-                style="font-size: 18px;color:#999;margin-right:10px;"
-              />
               {{boardInfo.title}}
             </span>
-            <!-- <span v-if="!!templateName" style="padding-left:12px;vertical-align: 2px;">
-                            <a-tag color="rgb(11,196,196)">{{templateName}}</a-tag>
-            </span>-->
             <span
               v-if="projectInfo.beginTime && projectInfo.endTime"
               style="padding-left:18px;vertical-align: 2px;"
@@ -30,12 +23,12 @@
       <flex-fill :style="{ positon:'relative',overflow:'auto',}">
         <div
           :style="{
-                    display:'grid',
-                    gridGap:'10px',
-                    padding:'5px 20px 20px 20px',
-                    width:`${(cols.length ) * 276 + 120+20}px`,
-                    gridTemplateColumns:`${new Array(cols.length||0).fill(0).map(v=>'266px').join(' ') } 120px`
-                  }"
+            display:'grid',
+            gridGap:'16px',
+            padding:'5px 20px 20px 20px',
+            width:`${(cols.length ) * 328 + 80+20}px`,
+            gridTemplateColumns:`${new Array(cols.length||0).fill(0).map(v=>'312px').join(' ') } 80px`
+          }"
         >
           <div v-for="v in cols" :key="v.colId" class="col-header">
             {{v.title}}
@@ -97,7 +90,7 @@ import CellPanel from "./board/CellPanel";
 import NewCardPanel from "./board/NewCardPanel";
 // import CardModal, { outer as modalOuter } from "./board/CardModal";
 
-import * as projectRequest from "@/request/board";
+import * as projectRequest from "@/service/board";
 
 import { BoardInfo, ProjectInfo } from "@/model/Project";
 
@@ -287,7 +280,7 @@ export default {
 .page-outer {
   height: 100%;
   width: 100%;
-  /* padding: 32px 48px 32px 48px; */
+  padding: 32px 48px 32px 48px;
 }
 
 .page-inner {
@@ -303,7 +296,7 @@ export default {
   text-align: left;
   padding: 16px 16px 4px;
   font-size: 16px;
-  margin-bottom: -10px;
+  margin-bottom: -16px;
 }
 
 .col-header-count {

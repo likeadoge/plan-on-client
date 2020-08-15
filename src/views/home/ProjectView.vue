@@ -9,15 +9,14 @@
       v-for="v in list"
       :key="v.info.projectId"
       @editProject="v=>editProject(v)"
+      @reload="()=>reloadProject(v.info.projectId)"
     />
   </div>
 </template>
 
 <script>
 import ProjectItem from "./project/ProjectItem";
-import ModalProjectInfo, {
-  outer as outMP,
-} from "./project/ModalProjectInfo";
+import ModalProjectInfo, { outer as outMP } from "./project/ModalProjectInfo";
 import * as projRequest from "@/service/project";
 
 export const outer = {
@@ -45,6 +44,11 @@ export default {
     },
     editProject(v) {
       this.$refs.modalProject[outMP.edit](v);
+    },
+    reloadProject(projectId) {
+      projRequest.getProject().then((data) => {
+        this.list = this.map((v) => (v.info.projectId == projectId ? data : v));
+      });
     },
   },
 };

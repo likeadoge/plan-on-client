@@ -7,23 +7,15 @@
       <a-collapse-panel key="1" :style="customStyle" @click.native.stop>
         <template #header>
           {{info.title}}
-          <a-dropdown>
+          <a-dropdown  v-if="owner()">
             <a class="ant-dropdown-link" @click.stop="e => e.preventDefault()">
               <a-icon type="more" :rotate="90" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;">保存为模板</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;" @click="()=>editProject()">编辑</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">归档</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">删除</a>
-              </a-menu-item>
+              <a-menu-item>保存为模板</a-menu-item>
+              <a-menu-item @click="()=>editProject()">编辑</a-menu-item>
+              <a-menu-item>归档</a-menu-item>
+              <a-menu-item>删除</a-menu-item>
             </a-menu>
           </a-dropdown>
         </template>
@@ -40,6 +32,8 @@
           >
             <p>{{v.title}}</p>
           </styled-card>
+
+          <dashed-button v-if="owner()" :style="{height:'140px'}" :icon-size="32" @click="cb=>cb(addBoard())"></dashed-button>
         </div>
       </a-collapse-panel>
     </a-collapse>
@@ -47,23 +41,38 @@
 </template>
 
 <script>
+import * as boardRequest from '@/service/board'
+
 export default {
   props: ["id", "info", "boardList"],
   mounted() {
     console.log(this.boardList);
   },
+  computed: {},
   data() {
     return {
-     customStyle:
+      customStyle:
         "background: #fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
     };
   },
   methods: {
+    owner() {
+      return true;
+    },
+    editor() {
+      return false;
+    },
+    viewer() {
+      return false;
+    },
     editProject() {
       this.$emit("editProject", this.id);
     },
-    linkToBoard(boardId){
-      this.$router.push(`/board/${boardId}`)
+    linkToBoard(boardId) {
+      this.$router.push(`/board/${boardId}`);
+    },
+    addBoard(){
+      return boardRequest.addBoard(this.id).then(()=>this.$emit('reload'))
     }
   },
 };

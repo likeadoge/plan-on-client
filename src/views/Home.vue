@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:48px;height:100%">
+  <div style="padding:48px 32px;height:100%">
     <a-layout style="padding: 24px 0; background: #fff;height:100%">
       <a-layout-sider width="200" style="background: #fff">
         <flex-col  style="height:100%">

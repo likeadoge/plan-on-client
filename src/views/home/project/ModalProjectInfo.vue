@@ -94,8 +94,8 @@ export default {
     },
     loadProjectInfo(id) {
       return projRequest
-        .getProjectInfo(id)
-        .then((info) => (this.info = info))
+        .getProject(id)
+        .then(({info}) => (this.info = info))
         .then(() => console.log("info", this.info));
     },
     [outer.add]() {
