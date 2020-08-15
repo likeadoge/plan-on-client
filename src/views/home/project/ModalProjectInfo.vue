@@ -13,7 +13,7 @@
           :value.sync="info.template"
         />
       </a-form-model-item>
-      <a-form-model-item label="所属用户组">
+      <a-form-model-item label="协作用户组">
         <simple-selector
           :list="groupList"
           :id="'gid'"

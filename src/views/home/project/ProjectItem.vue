@@ -34,13 +34,13 @@
             level
             hover
             v-for="v in boardList"
+            @click.native="()=>linkToBoard(v.boardId)"
             :key="v.boardId"
             style="height:140px"
           >
             <p>{{v.title}}</p>
           </styled-card>
         </div>
-        <!-- <p>{{ text }}</p> -->
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -54,8 +54,7 @@ export default {
   },
   data() {
     return {
-      text: `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`,
-      customStyle:
+     customStyle:
         "background: #fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
     };
   },
@@ -63,6 +62,9 @@ export default {
     editProject() {
       this.$emit("editProject", this.id);
     },
+    linkToBoard(boardId){
+      this.$router.push(`/board/${boardId}`)
+    }
   },
 };
 </script>

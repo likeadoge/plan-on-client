@@ -56,6 +56,17 @@ export class Template {
 }
 
 export class BoardInfo {
+    boardId = ''
+    title = ''
+    sort = ''
+    projectId = ''
+
+    rows = [] // {rowId,sort}
+    cols = [] // {colId,sort,title}
+
+    static blank() {
+        return new BoardInfo({})
+    }
 
     static rand() {
         return new BoardInfo({
@@ -64,10 +75,83 @@ export class BoardInfo {
         })
     }
 
+
     constructor(json) {
         Object.assign(this, json)
     }
 
-    boardId
-    title
+    static fromServer(json) {
+        return new ProjectInfo({
+            boardId: json.id,
+            projectId: json.projectId,
+            sort: json.sort,
+            title: json.name,
+        })
+    }
+}
+
+export class Row {
+    rowId = ''
+    sort = ''
+    constructor(json) {
+        Object.assign(this, json)
+    }
+
+    static mockList = rand.arr(4, 6)(() => Row.rand())
+
+    static rand() {
+        return new Row({
+            rowId: rand.uuid(),
+            sort: Math.random(),
+            title: rand.str(4, 7)
+        })
+    }
+}
+
+export class Col {
+    colId = ''
+    sort = ''
+    title = ''
+    constructor(json) {
+        Object.assign(this, json)
+    }
+
+
+    static mockList = rand.arr(4, 6)(() => new Row({
+        colId: rand.uuid(),
+        sort: Math.random(),
+        title: rand.str(4, 7)
+    }))
+}
+
+export class CardInfo {
+    boardId = ''
+    rowId = ''
+    colId = ''
+    cardId = ''
+    sort = ''
+    content = ''
+    desc = ''
+    version = ''
+    executors = []
+    endTime = null && moment()
+    beginTime = null && moment()
+
+    constructor(json) {
+        Object.assign(this, json)
+    }
+
+    static mockData = [new CardInfo({
+        content: '测试卡片',
+        rowId: Row.mockList[0].rowId,
+        colId: Col.mockList[0].colId,
+        sort: 0,
+        cardId: rand.uuid()
+    })]
+
+    static blank() {
+        return new CardInfo({
+            cardId: rand.uuid()
+        })
+    }
 }
