@@ -7,7 +7,7 @@
       <a-collapse-panel key="1" :style="customStyle" @click.native.stop>
         <template #header>
           {{info.title}}
-          <a-dropdown  v-if="owner()">
+          <a-dropdown v-if="owner()">
             <a class="ant-dropdown-link" @click.stop="e => e.preventDefault()">
               <a-icon type="more" :rotate="90" />
             </a>
@@ -21,19 +21,13 @@
         </template>
 
         <div class="board-list">
-          <styled-card
-            padding
-            level
-            hover
-            v-for="v in boardList"
-            @click.native="()=>linkToBoard(v.boardId)"
-            :key="v.boardId"
+          <board-item v-for="v in boardList" :key="v.boardId" :board-info="v" :auth="auth" />
+          <dashed-button
+            v-if="owner()"
             style="height:140px"
-          >
-            <p>{{v.title}}</p>
-          </styled-card>
-
-          <dashed-button v-if="owner()" :style="{height:'140px'}" :icon-size="32" @click="cb=>cb(addBoard())"></dashed-button>
+            :icon-size="32"
+            @click="cb=>cb(addBoard())"
+          ></dashed-button>
         </div>
       </a-collapse-panel>
     </a-collapse>
@@ -41,10 +35,13 @@
 </template>
 
 <script>
-import * as boardRequest from '@/service/board'
+import * as boardRequest from "@/service/board";
+import BoardItem from "./ProjectItem/BoardItem";
+import { auth } from "@/utils/auth";
 
 export default {
   props: ["id", "info", "boardList"],
+  components: { BoardItem },
   mounted() {
     console.log(this.boardList);
   },
@@ -56,24 +53,13 @@ export default {
     };
   },
   methods: {
-    owner() {
-      return true;
-    },
-    editor() {
-      return false;
-    },
-    viewer() {
-      return false;
-    },
+    ...auth(),
     editProject() {
       this.$emit("editProject", this.id);
     },
-    linkToBoard(boardId) {
-      this.$router.push(`/board/${boardId}`);
+    addBoard() {
+      return boardRequest.addBoard(this.id).then(() => this.$emit("reload"));
     },
-    addBoard(){
-      return boardRequest.addBoard(this.id).then(()=>this.$emit('reload'))
-    }
   },
 };
 </script>

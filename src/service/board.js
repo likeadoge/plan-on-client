@@ -14,8 +14,8 @@ export const addBoard = (projectId) => {
 export const getBoradDetail = (boardId) => {
     console.log(boardId)
     return Promise.resolve({
-        cols: Col.mockList,
-        rows: Row.mockList,
+        cols: Col.mockList.sort((a, b) => a.sort - b.sort),
+        rows: Row.mockList.sort((a, b) => a.sort - b.sort),
         cards: CardInfo.mockData,
         projectInfo: ProjectInfo.rand(),
         boardInfo: BoardInfo.rand(),

@@ -1,6 +1,6 @@
 <template>
-  <div class="row-operate">
-    <p>
+  <div class="row-operate" >
+    <p v-if="!viewer()">
       <a-button
         @click="rowUp"
         size="small"
@@ -14,7 +14,7 @@
       <!-- <a-button @click="rowBottom" size="small" :ghost="true" type="primary" shape="round">底部</a-button> -->
       <!-- <a-button @click="rowCopy" size="small" :ghost="true" type="primary" shape="round">复制</a-button> -->
     </p>
-    <p>
+    <p v-if="!viewer()">
       <a-button
         @click="rowDown"
         size="small"
@@ -25,7 +25,7 @@
         style="margin-right:12px"
       />
     </p>
-    <p>
+    <p v-if="!viewer()">
       <a-button
         @click="rowDelete"
         size="small"
@@ -40,9 +40,12 @@
 </template>
 
 <script>
+import { auth } from "@/utils/auth";
+
 export default {
   props: ["rowId"],
   methods: {
+    ...auth(),
     rowUp() {
       this.$emit("rowUp", { rowId: this.rowId });
     },

@@ -9,9 +9,7 @@
             </router-link>
           </flex-fixed>
           <flex-fill>
-            <span style="font-size: 18px;color:#333;">
-              {{boardInfo.title}}
-            </span>
+            <span style="font-size: 18px;color:#333;">{{boardInfo.title}}</span>
             <span
               v-if="projectInfo.beginTime && projectInfo.endTime"
               style="padding-left:18px;vertical-align: 2px;"
@@ -73,9 +71,11 @@
               @rowCopy="({rowId})=>rowCopy(rowId)"
             />
           </template>
-          <a-button @click="()=>rowAdd()" style="height:48px;text-align:left;">
+          <!-- <a-button @click="()=>rowAdd()" style="height:48px;text-align:left;">
             <icon-font type="icon-AddItem" style="font-size: 14px;" />添加泳道
-          </a-button>
+          </a-button>-->
+
+          <add-row-btn @addRow="(cb)=>rowAdd(cb)" />
         </div>
       </flex-fill>
     </flex-col>
@@ -88,6 +88,7 @@
 import RowOpreater from "./board/RowOpreater";
 import CellPanel from "./board/CellPanel";
 import NewCardPanel from "./board/NewCardPanel";
+import AddRowBtn from "./board/AddRowBtn";
 // import CardModal, { outer as modalOuter } from "./board/CardModal";
 
 import * as projectRequest from "@/service/board";
@@ -99,6 +100,7 @@ export default {
     RowOpreater,
     CellPanel,
     // CardModal,
+    AddRowBtn,
     NewCardPanel,
   },
   props: ["id"],
@@ -140,12 +142,12 @@ export default {
       return projectRequest
         .getBoradDetail(this.id)
         .then(({ boardInfo, projectInfo, rows, cols, cards }) => {
-          this.rows = rows
-          this.cards = cards
-          this.cols = cols
+          this.rows = rows;
+          this.cards = cards;
+          this.cols = cols;
           this.boardInfo = boardInfo;
-          this.projectInfo = projectInfo
-          this.allUserList = projectInfo.editableUser.userList
+          this.projectInfo = projectInfo;
+          this.allUserList = projectInfo.editableUser.userList;
         })
         .then(() => {});
     },
@@ -182,8 +184,12 @@ export default {
         },
       });
     },
-    rowAdd() {
-      projectRequest.addBoardRow(this.id).then(() => this.loadDetail());
+    rowAdd(cb) {
+      projectRequest
+        .addBoardRow(this.id)
+        .then(() => this.loadDetail())
+        .then(() => cb.res())
+        .catch(() => cb.rej());
     },
     rowUp(rowId) {
       const rows = this.rows.flatMap((v, i, arr) => {
