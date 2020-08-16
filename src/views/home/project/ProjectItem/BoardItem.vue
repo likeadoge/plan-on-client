@@ -20,10 +20,10 @@
       <flex-fixed class="btn" @click.native.stop v-if="owner()">
         <template v-if="this.status === 'view'">
           <a-button icon="edit" @click="()=>toggleStatus()" type="link" size="small"></a-button>
-          <a-button icon="delete" type="link" size="small"></a-button>
+          <a-button icon="delete" @click="()=>delBoard()" type="link" size="small"></a-button>
         </template>
         <template v-if="this.status === 'edit'">
-          <a-button type="primary" class="btn-next">保存</a-button>
+          <a-button @click="()=>editBoard()" type="primary" class="btn-next">保存</a-button>
           <a-button @click="()=>toggleStatus()" type="link">取消</a-button>
         </template>
       </flex-fixed>
@@ -48,6 +48,15 @@ export default {
     linkToBoard(boardId) {
       if (this.status === "view") this.$router.push(`/board/${boardId}`);
     },
+    editBoard(){
+      return new Promise((res,rej)=>
+      this.$emit('editBoard',this.editTitle,{
+        res,rej
+      })).then(()=>this.status =  "view")
+    },
+    delBoard(){
+      this.$emit('delBoard')
+    }
   },
 };
 </script>

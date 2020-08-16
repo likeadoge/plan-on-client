@@ -21,7 +21,13 @@
         </template>
 
         <div class="board-list">
-          <board-item v-for="v in boardList" :key="v.boardId" :board-info="v" :auth="auth" />
+          <board-item
+            v-for="v in boardList"
+            :key="v.boardId"
+            :board-info="v"
+            @delBoard="()=>delBoard(v.boardId)"
+            @editBoard="(title,cb)=>editBoard(v.boardId,title,cb)"
+          />
           <dashed-button
             v-if="owner()"
             style="height:140px"
@@ -59,6 +65,33 @@ export default {
     },
     addBoard() {
       return boardRequest.addBoard(this.id).then(() => this.$emit("reload"));
+    },
+    editBoard(boardId, title, cb) {
+      boardRequest
+        .editBoard({
+          projectId: this.id,
+          boardId,
+          title,
+        })
+        .then(() => this.$emit("reload"))
+        .then(() => cb.res());
+    },
+    delBoard(boardId) {
+      return this.$confirm({
+        title: "提示",
+        content: "确定删除面板么？面板删除后不可恢复",
+        okText: "确认",
+        okType: "danger",
+        cancelText: "取消",
+        onOk: () => {
+          boardRequest
+            .delBoard({
+              projectId: this.id,
+              boardId,
+            })
+            .then(() => this.$emit("reload"));
+        },
+      });
     },
   },
 };
