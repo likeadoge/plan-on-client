@@ -79,7 +79,7 @@ export default {
     delBoard(boardId) {
       return this.$confirm({
         title: "提示",
-        content: "确定删除面板么？面板删除后不可恢复",
+        content: "确定删除看板么？看板删除后不可恢复",
         okText: "确认",
         okType: "danger",
         cancelText: "取消",
