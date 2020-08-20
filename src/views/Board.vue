@@ -2,13 +2,13 @@
   <div class="page-outer">
     <flex-col style="height:100%;positon:relative" class="page-inner">
       <flex-fixed>
-        <flex-row style="magin:0;height:64px;line-height:72px;margin-bottom:0;padding-left:4px">
+        <flex-row style="magin:0;height:64px;line-height:72px;margin-bottom:0;padding-left:52px">
           <flex-fixed>
             <router-link to="/" style="vertical-align: -2px;">
               <a-button type="link" icon="left" :size="'large'" />
             </router-link>
           </flex-fixed>
-          <flex-fill>
+          <flex-fill >
             <span style="font-size: 18px;color:#333;">{{boardInfo.title}}</span>
             <span
               v-if="projectInfo.beginTime && projectInfo.endTime"
@@ -23,7 +23,7 @@
           :style="{
             display:'grid',
             gridGap:'16px',
-            padding:'5px 20px 20px 20px',
+            padding:'5px 68px 52px 68px',
             width:`${(cols.length ) * 328 + 80+20}px`,
             gridTemplateColumns:`${new Array(cols.length||0).fill(0).map(v=>'312px').join(' ') } 80px`
           }"
@@ -286,18 +286,22 @@ export default {
 .page-outer {
   height: 100%;
   width: 100%;
-  padding: 32px 48px 32px 48px;
+  /* padding: 32px 48px ; */
 }
 
 .page-inner {
   height: 100%;
   width: 100%;
-  background: #fff;
+  background: transparent;
   overflow: auto;
+  padding-top: 32px;
+  /* padding: 32px 48px ; */
+
 }
 
 .col-header {
-  background: rgb(242, 243, 243);
+  background: #fff;
+  border-radius: 4px;
   line-height: 24px;
   text-align: left;
   padding: 16px 16px 4px;

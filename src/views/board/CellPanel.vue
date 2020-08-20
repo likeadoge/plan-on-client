@@ -81,13 +81,14 @@ export default {
 
 <style lang="css" scoped>
 .cell-panel {
-  background: rgb(242, 243, 243);
+  background-color: #fff;
   padding: 10px;
+  border-radius: 4px;
 }
 
 .card.panel {
   border-radius: 4px;
-  background-color: #fff;
+  background: rgb(242, 243, 243);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.01);
   transition: all 0.3s ease-out;
   padding: 18px;

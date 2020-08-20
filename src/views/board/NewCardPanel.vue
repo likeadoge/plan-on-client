@@ -116,7 +116,9 @@ export default {
 <style scoped>
 .card.panel {
   border-radius: 4px;
-  background-color: #fff;
+  /* background-color: #fff; */
+  
+  background: rgb(242, 243, 243);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.01);
   transition: all 0.3s ease-out;
   padding: 18px;
